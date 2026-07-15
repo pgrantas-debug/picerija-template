@@ -1,6 +1,7 @@
 ---
 import { useTranslations, type Lang } from "../i18n/translations";
 import { siteConfig } from "../config/site.config";
+import { withBase } from "../config/paths";
 
 interface Props {
   lang: Lang;
@@ -37,7 +38,7 @@ const t = useTranslations(lang);
     </div>
     <div class="hero-photo">
       <div class="frame">
-        <img src={siteConfig.hero.image} alt={siteConfig.hero.imageAlt[lang]} />
+        <img src={withBase(siteConfig.hero.image)} alt={siteConfig.hero.imageAlt[lang]} />
       </div>
       <div class="sticker">
         <b>{siteConfig.rating.value}★</b>

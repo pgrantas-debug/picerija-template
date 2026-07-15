@@ -1,6 +1,7 @@
 ---
 import { useTranslations, type Lang } from "../i18n/translations";
 import { MENU } from "../config/menu.data";
+import { withBase } from "../config/paths";
 
 interface Props {
   lang: Lang;
@@ -8,7 +9,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const featured = MENU.filter((i) => i.featured);
+const featured = MENU.filter((i) => i.featured && i.img);
 const categories = ["Bruschetta", "Pizzas", "Especiales"] as const;
 ---
 
@@ -24,7 +25,7 @@ const categories = ["Bruschetta", "Pizzas", "Especiales"] as const;
       {featured.map((item) => (
         <div class="dish reveal">
           <div class="dish-img">
-            <img src={item.img} alt={item.name} />
+            <img src={withBase(item.img!)} alt={item.name} />
             {item.veg && <span class="dish-tag">{t.menu.vegDish}</span>}
           </div>
           <div class="dish-body">
