@@ -1,0 +1,42 @@
+---
+import { useTranslations, type Lang } from "../i18n/translations";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const icons = [
+  `<path d="M4 12h16M4 6h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />`,
+  `<path d="M4 20h16M6 20V9l6-5 6 5v11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />`,
+  `<circle cx="7" cy="18" r="2.5" stroke="currentColor" stroke-width="2" /><circle cx="17" cy="18" r="2.5" stroke="currentColor" stroke-width="2" /><path d="M7 18 10 8h5l4 8M10 8l1.5 4H6" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />`,
+  `<path d="M12 21c-4-3-8-6.5-8-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 4.5-4 8-8 11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />`,
+];
+---
+
+<section class="tracker">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">{t.tracker.eyebrow}</p>
+      <h2>{t.tracker.title}</h2>
+    </div>
+    <div class="track-strip">
+      <div class="track-line"></div>
+      <svg class="track-bike" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="34" r="7" stroke="currentColor" stroke-width="2.4" />
+        <circle cx="36" cy="34" r="7" stroke="currentColor" stroke-width="2.4" />
+        <path d="M12 34 20 18h8l8 16M20 18l4 8h-12" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" />
+      </svg>
+      <div class="track-nodes">
+        {t.tracker.steps.map((step, i) => (
+          <div class="track-node reveal">
+            <div class="node-circle" set:html={`<svg viewBox="0 0 24 24" fill="none">${icons[i]}</svg>`} />
+            <h4>{step.title}</h4>
+            <p>{step.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

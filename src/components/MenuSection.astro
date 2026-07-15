@@ -1,0 +1,95 @@
+---
+import { useTranslations, type Lang } from "../i18n/translations";
+import { MENU } from "../config/menu.data";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const featured = MENU.filter((i) => i.featured);
+const categories = ["Bruschetta", "Pizzas", "Especiales"] as const;
+---
+
+<section class="menu-section" id="menu">
+  <div class="wrap">
+    <div class="menu-top reveal">
+      <div class="section-head" style="margin: 0;">
+        <p class="eyebrow">{t.menu.eyebrowFav}</p>
+        <h2>{t.menu.titleFav}</h2>
+      </div>
+    </div>
+    <div class="featured-grid" id="featuredGrid">
+      {featured.map((item) => (
+        <div class="dish reveal">
+          <div class="dish-img">
+            <img src={item.img} alt={item.name} />
+            {item.veg && <span class="dish-tag">{t.menu.vegDish}</span>}
+          </div>
+          <div class="dish-body">
+            <h3>{item.name}</h3>
+            <p>{lang === "es" ? item.es : item.en}</p>
+            <div class="dish-foot">
+              <span class="dish-price">{item.price.toFixed(2)}€</span>
+              <button class="mini-add" data-name={item.name} data-price={item.price}>+</button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="section-head reveal">
+      <p class="eyebrow">{t.menu.eyebrowFull}</p>
+      <h2>{t.menu.titleFull}<br />{t.menu.titleFull2}</h2>
+    </div>
+    <div class="menu-controls">
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" /><path d="m21 21-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+        <input type="text" id="menuSearch" placeholder={t.menu.searchPlaceholder} />
+      </div>
+      <div class="tab-row" id="tabRow">
+        <button class="tab-btn active" data-cat="Todas">{t.menu.tabs.Todas}</button>
+        <button class="tab-btn" data-cat="Bruschetta">{t.menu.tabs.Bruschetta}</button>
+        <button class="tab-btn" data-cat="Pizzas">{t.menu.tabs.Pizzas}</button>
+        <button class="tab-btn" data-cat="Especiales">{t.menu.tabs.Especiales}</button>
+      </div>
+      <div class="diet-row">
+        <button class="diet-btn" id="dietVeg">{t.menu.vegLabel}</button>
+        <button class="diet-btn spicy" id="dietSpicy">{t.menu.spicyLabel}</button>
+      </div>
+    </div>
+    <p class="menu-note">{t.menu.note}</p>
+    <div id="menuContainer">
+      {categories.map((cat) => {
+        const items = MENU.filter((i) => i.cat === cat);
+        return (
+          <div class="menu-cat" data-cat={cat}>
+            <h3>{t.menu.tabs[cat]}</h3>
+            <div class="menu-list">
+              {items.map((i) => (
+                <div class="menu-row" data-name={i.name.toLowerCase()} data-es={i.es.toLowerCase()} data-en={i.en.toLowerCase()} data-veg={i.veg ? "1" : "0"} data-spicy={i.spicy ? "1" : "0"}>
+                  <div class="mr-left">
+                    <h5>
+                      {i.name}
+                      {i.veg && <span class="micro-tag veg">{t.menu.vegTag}</span>}
+                      {i.spicy && <span class="micro-tag spicy">{t.menu.spicyTag}</span>}
+                    </h5>
+                    <p>{lang === "es" ? i.es : i.en}</p>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <span class="mr-price">{i.price.toFixed(2)}€</span>
+                    <button class="mini-add" data-name={i.name} data-price={i.price}>+</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+    <p class="empty-state" id="emptyState">{t.menu.empty}</p>
+    <div class="allergen-note">
+      <b>{t.menu.allergenTitle}</b> {t.menu.allergenText}
+    </div>
+  </div>
+</section>

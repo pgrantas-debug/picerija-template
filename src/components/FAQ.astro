@@ -1,0 +1,27 @@
+---
+import { useTranslations, type Lang } from "../i18n/translations";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">{t.faq.eyebrow}</p>
+      <h2>{t.faq.title}</h2>
+    </div>
+    <div class="faq-list">
+      {t.faq.items.map((item, i) => (
+        <details class="faq-item" open={i === 0}>
+          <summary>{item.q}</summary>
+          <p>{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

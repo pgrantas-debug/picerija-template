@@ -1,0 +1,48 @@
+---
+import { useTranslations, type Lang } from "../i18n/translations";
+import { siteConfig } from "../config/site.config";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="hero-status-row">
+        <span class="status-pill" id="statusPillHero">
+          <span class="status-dot"></span>
+          <span id="statusTextHero">{t.hero.checking}</span>
+        </span>
+        <span class="rating-pill" id="ratingPill">
+          ★ {siteConfig.rating.value} · {siteConfig.rating.count} {t.hero.ratingLabel}
+        </span>
+      </div>
+      <h1>
+        {t.hero.title1}<br />
+        {t.hero.title2} <span class="accent">{t.hero.accent}</span>
+      </h1>
+      <p class="hero-sub">{t.hero.sub}</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-orange">{t.hero.ctaMenu}</a>
+        <button class="btn btn-white" id="openSheetHero">{t.hero.ctaWhatsapp}</button>
+      </div>
+      <div class="hero-tags">
+        {t.hero.tags.map((tag) => <span class="tag-chip">{tag}</span>)}
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="frame">
+        <img src={siteConfig.hero.image} alt={siteConfig.hero.imageAlt[lang]} />
+      </div>
+      <div class="sticker">
+        <b>{siteConfig.rating.value}★</b>
+        <span>Google Reviews</span>
+      </div>
+    </div>
+  </div>
+</section>

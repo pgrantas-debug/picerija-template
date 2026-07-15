@@ -1,0 +1,41 @@
+---
+import { useTranslations, type Lang } from "../i18n/translations";
+import { siteConfig } from "../config/site.config";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const fullAddress = `${siteConfig.address.street}, ${siteConfig.address.postalCode} ${siteConfig.address.city}, ${siteConfig.address.region}`;
+---
+
+<section class="visit" id="visit">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">{t.visit.eyebrow}</p>
+      <h2 style="font-family:var(--f-head);font-weight:800;font-size:clamp(1.9rem,3.6vw,2.5rem);margin:8px 0 26px;">{t.visit.title}</h2>
+      <div class="visit-card">
+        <div class="v-row"><span>{t.visit.rows.address}</span><span>{fullAddress}</span></div>
+        <div class="v-row"><span>{t.visit.rows.hours}</span><span>{siteConfig.hours.display[lang]}</span></div>
+        <div class="v-row"><span>{t.visit.rows.closed}</span><span>{siteConfig.hours.closedDayLabel[lang]}</span></div>
+        <div class="v-row"><span>{t.visit.rows.phone}</span><span>{siteConfig.business.phone}</span></div>
+        <div class="v-row"><span>{t.visit.rows.service}</span><span>{t.visit.rows.serviceValue}</span></div>
+      </div>
+    </div>
+    <div class="map-box reveal">
+      <div class="map-shell">
+        <iframe
+          title="Google Maps for Pizzeria El Gordo"
+          src={siteConfig.address.mapsEmbedUrl}
+          class="map-iframe"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        />
+        <a class="btn btn-orange map-link" href={`https://www.google.com/maps/search/?api=1&query=${siteConfig.address.mapsQuery}`} target="_blank" rel="noopener">{t.visit.directions}</a>
+      </div>
+    </div>
+  </div>
+</section>

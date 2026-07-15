@@ -1,0 +1,38 @@
+---
+import { useTranslations, type Lang } from "../i18n/translations";
+import { siteConfig } from "../config/site.config";
+import LangSwitcher from "./LangSwitcher.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="brand-mark">
+      <img src={siteConfig.business.logo} alt={`${siteConfig.business.name} Logo`} />
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#menu">{t.nav.menu}</a>
+      <a href="#reviews">{t.nav.reviews}</a>
+      <a href="#visit">{t.nav.visit}</a>
+      <span class="status-pill" id="statusPillNav">
+        <span class="status-dot"></span>
+        <span id="statusTextNav">{t.nav.checking}</span>
+      </span>
+    </div>
+    <div class="nav-right">
+      <LangSwitcher currentLang={lang} />
+      <button class="order-btn" id="openSheetNav">
+        <span class="label">{t.nav.cart}</span> · <span id="cartCountNav">0</span>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>

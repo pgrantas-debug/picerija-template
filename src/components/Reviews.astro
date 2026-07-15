@@ -1,0 +1,39 @@
+---
+import { useTranslations, type Lang } from "../i18n/translations";
+import { siteConfig } from "../config/site.config";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="review-top reveal">
+      <div class="rating-card">
+        <div class="big">{siteConfig.rating.value}</div>
+        <div class="stars">★★★★★</div>
+        <small>{t.reviews.ratingSuffix}</small>
+      </div>
+      <div>
+        <p class="eyebrow">{t.reviews.eyebrow}</p>
+        <h2 style="font-family:var(--f-head);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.4rem);margin:8px 0 0;">{t.reviews.title}</h2>
+      </div>
+    </div>
+    <div class="review-grid">
+      {siteConfig.reviews.map((r) => (
+        <div class="review-card reveal">
+          <div class="stars">{"★".repeat(r.stars)}</div>
+          <p>{r.text[lang]}</p>
+          <div class="who">— {r.author}</div>
+        </div>
+      ))}
+    </div>
+    <div class="review-cta reveal">
+      <a class="btn btn-orange" href={`https://www.google.com/maps/search/?api=1&query=${siteConfig.address.mapsQuery}`} target="_blank" rel="noopener">{t.reviews.cta}</a>
+    </div>
+  </div>
+</section>

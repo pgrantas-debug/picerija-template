@@ -1,0 +1,34 @@
+---
+import { useTranslations, type Lang } from "../i18n/translations";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav class="tabbar" id="tabbar">
+  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 11 12 4l8 7M6 9.5V20h12V9.5" stroke="currentColor" stroke-width="2" stroke-linejoin="round" /></svg>
+    {t.tabbar.home}
+  </a>
+  <a href="#menu">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+    {t.tabbar.menu}
+  </a>
+  <button id="openSheetTab">
+    <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="20" r="1.3" fill="currentColor" /><circle cx="18" cy="20" r="1.3" fill="currentColor" /><path d="M2 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6" stroke="currentColor" stroke-width="2" stroke-linejoin="round" /></svg>
+    {t.tabbar.cart}
+    <span class="tab-cart-badge" id="tabCartBadge" style="display:none;">0</span>
+  </button>
+  <a href="#reviews">
+    <svg viewBox="0 0 24 24" fill="none"><path d="m12 3 2.6 5.6L21 9.3l-4.5 4.2 1.1 6.2L12 16.8l-5.6 2.9 1.1-6.2L3 9.3l6.4-.7L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+    {t.tabbar.reviews}
+  </a>
+  <a href="#visit">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13A7 7 0 1 0 5 9c0 5.42 7 13 7 13Z" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8" /></svg>
+    {t.tabbar.visit}
+  </a>
+</nav>

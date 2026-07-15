@@ -1,0 +1,56 @@
+---
+import { useTranslations, type Lang } from "../i18n/translations";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="overlay" id="overlay"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <h3>{t.cart.title}</h3>
+    <button class="sheet-close" id="sheetClose">&times;</button>
+  </div>
+  <div class="order-type">
+    <button class="ot-btn active" data-type="Recogida">{t.cart.pickup}</button>
+    <button class="ot-btn" data-type="Domicilio">{t.cart.delivery}</button>
+  </div>
+  <div class="sheet-body">
+    <div id="sheetItems"><p class="sheet-empty">{t.cart.empty}</p></div>
+    <textarea class="note-field" id="orderNote" placeholder={t.cart.notePlaceholder} rows="2"></textarea>
+  </div>
+  <div class="sheet-foot">
+    <div class="sheet-total"><span>{t.cart.total}</span><span id="sheetTotal">0,00€</span></div>
+    <button class="send-btn" id="sendOrder">{t.cart.send}</button>
+  </div>
+</div>
+<script define:vars={{
+  emptyText: t.cart.empty,
+  removeLabel: t.cart.remove,
+  emptyAlert: t.cart.emptyAlert,
+  whatsappHeader: t.cart.whatsappHeader,
+  whatsappType: t.cart.whatsappType,
+  whatsappTotal: t.cart.whatsappTotal,
+  whatsappNote: t.cart.whatsappNote,
+  whatsappAddress: t.cart.whatsappAddress,
+  pickupLabel: t.cart.pickup,
+  deliveryLabel: t.cart.delivery,
+}}>
+  window.__cartI18n = {
+    emptyText,
+    removeLabel,
+    emptyAlert,
+    whatsappHeader,
+    whatsappType,
+    whatsappTotal,
+    whatsappNote,
+    whatsappAddress,
+    pickupLabel,
+    deliveryLabel,
+  };
+</script>

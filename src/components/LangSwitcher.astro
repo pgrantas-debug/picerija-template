@@ -1,0 +1,19 @@
+---
+import { languages, type Lang } from "../i18n/translations";
+import { getAlternateLangPath } from "../i18n/utils";
+
+interface Props {
+  currentLang: Lang;
+}
+
+const { currentLang } = Astro.props;
+const url = Astro.url;
+---
+
+<div class="lang-switch">
+  {Object.keys(languages).map((lng) => (
+    <a href={getAlternateLangPath(url, lng as Lang)} class={lng === currentLang ? "active" : ""}>
+      {lng}
+    </a>
+  ))}
+</div>

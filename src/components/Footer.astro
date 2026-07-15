@@ -1,0 +1,26 @@
+---
+import { useTranslations, type Lang } from "../i18n/translations";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="foot-top">
+    <img src="/images/logo.png" alt="Logo" />
+    <div class="foot-links">
+      <a href="#menu">{t.nav.menu}</a>
+      <a href="#reviews">{t.nav.reviews}</a>
+      <a href="#visit">{t.nav.visit}</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© {year} {t.footer.copyright}</span>
+    <span>{t.footer.tagline}</span>
+  </div>
+</footer>
