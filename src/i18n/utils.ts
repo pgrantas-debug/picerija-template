@@ -27,6 +27,8 @@ export function getAlternateLangPath(url: URL, targetLang: Lang): string {
   const rest = parts.join("/");
   const basePrefix = `/${getBasePathSegments().join("/")}`;
   const base = basePrefix === "/" ? "" : basePrefix;
+  const langPrefix = targetLang === defaultLang ? "" : `/${targetLang}`;
+  const restPrefix = rest ? `/${rest}` : "";
 
-  return `${base}/${targetLang}${rest ? `/${rest}` : ""}/`;
+  return `${base}${langPrefix}${restPrefix}/`;
 }

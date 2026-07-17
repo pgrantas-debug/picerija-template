@@ -1,7 +1,40 @@
 ---
-const baseUrl = import.meta.env.BASE_URL.endsWith('/')
-	? import.meta.env.BASE_URL
-	: `${import.meta.env.BASE_URL}/`;
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Tracker from '../components/Tracker.astro';
+import MenuSection from '../components/MenuSection.astro';
+import Reviews from '../components/Reviews.astro';
+import FAQ from '../components/FAQ.astro';
+import Visit from '../components/Visit.astro';
+import Footer from '../components/Footer.astro';
+import TabBar from '../components/TabBar.astro';
+import CartSheet from '../components/CartSheet.astro';
 
-return Astro.redirect(`${baseUrl}es/`);
+const lang = 'es' as const;
 ---
+
+<Layout lang={lang}>
+	<Nav lang={lang} />
+	<Hero lang={lang} />
+	<Tracker lang={lang} />
+	<MenuSection lang={lang} />
+	<Reviews lang={lang} />
+	<FAQ lang={lang} />
+	<Visit lang={lang} />
+	<Footer lang={lang} />
+	<TabBar lang={lang} />
+	<CartSheet lang={lang} />
+</Layout>
+
+<script>
+	import { initCart } from '../scripts/cart';
+	import { initMenuFilters } from '../scripts/menuFilters';
+	import { initStatus } from '../scripts/status';
+	import { initUI } from '../scripts/ui';
+
+	initCart();
+	initMenuFilters();
+	initStatus('es');
+	initUI();
+</script>
