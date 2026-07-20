@@ -23,10 +23,14 @@ const t = useTranslations(lang);
   <div class="sheet-body">
     <div id="sheetItems"><p class="sheet-empty">{t.cart.empty}</p></div>
     <textarea class="note-field" id="orderNote" placeholder={t.cart.notePlaceholder} rows="2"></textarea>
+    <input type="text" class="address-field" id="orderAddress" placeholder={t.cart.addressPlaceholder} style="display:none;">
   </div>
   <div class="sheet-foot">
     <div class="sheet-total"><span>{t.cart.total}</span><span id="sheetTotal">0,00€</span></div>
-    <button class="send-btn" id="sendOrder">{t.cart.send}</button>
+    <div class="sheet-buttons">
+      <button class="send-btn" id="sendOrder">{t.cart.send}</button>
+      <button class="send-btn send-btn-sms" id="sendOrderSms">{t.cart.sendSms}</button>
+    </div>
   </div>
 </div>
 <script define:vars={{
@@ -40,6 +44,8 @@ const t = useTranslations(lang);
   whatsappAddress: t.cart.whatsappAddress,
   pickupLabel: t.cart.pickup,
   deliveryLabel: t.cart.delivery,
+  sendSms: t.cart.sendSms,
+  addressPlaceholder: t.cart.addressPlaceholder,
 }}>
   window.__cartI18n = {
     emptyText,
@@ -52,5 +58,7 @@ const t = useTranslations(lang);
     whatsappAddress,
     pickupLabel,
     deliveryLabel,
+    sendSms,
+    addressPlaceholder,
   };
 </script>

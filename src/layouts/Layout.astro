@@ -295,10 +295,14 @@ const pageTitle = title
   .si-remove { background: none; border: 1.5px solid var(--ink); width: 26px; height: 26px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: var(--ink); flex-shrink: 0; transition: background .2s, color .2s; }
   .si-remove:hover { background: #c0392b; border-color: #c0392b; color: #fff; }
   .note-field { width: 100%; margin-top: 14px; border: 2px solid var(--ink); border-radius: 12px; padding: 12px; font-family: var(--f-body); font-size: 0.85rem; resize: none; }
+  .address-field { width: 100%; margin-top: 10px; border: 2px solid var(--ink); border-radius: 12px; padding: 12px; font-family: var(--f-body); font-size: 0.85rem; }
   .sheet-foot { padding: 16px 22px 22px; border-top: 2px solid var(--ink); }
   .sheet-total { display: flex; justify-content: space-between; font-family: var(--f-mono); font-weight: 700; font-size: 1.15rem; margin-bottom: 14px; }
-  .send-btn { width: 100%; background: var(--green); color: #fff; border: 2px solid var(--ink); padding: 16px; border-radius: 100px; font-family: var(--f-head); font-weight: 700; font-size: 0.95rem; cursor: pointer; box-shadow: var(--shadow-sm); }
-  .send-btn:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
+  .sheet-buttons { display: flex; gap: 10px; width: 100%; }
+  .send-btn { flex: 1; background: var(--green); color: #fff; border: 2px solid var(--ink); padding: 14px 16px; border-radius: 12px; font-family: var(--f-head); font-weight: 700; font-size: 0.9rem; cursor: pointer; box-shadow: var(--shadow-sm); transition: all 0.2s ease; letter-spacing: 0.3px; }
+  .send-btn:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); background: #5db948; }
+  .send-btn-sms { background: #1f7396; }
+  .send-btn-sms:hover { background: #155a7a; }
 
   @media (max-width: 980px) {
     .hero .wrap { grid-template-columns: 1fr; }

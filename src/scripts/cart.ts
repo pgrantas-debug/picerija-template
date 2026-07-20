@@ -20,6 +20,8 @@ interface CartI18n {
   whatsappAddress: string;
   pickupLabel: string;
   deliveryLabel: string;
+  sendSms: string;
+  addressPlaceholder: string;
 }
 
 declare global {
@@ -104,8 +106,16 @@ function sendOrder() {
     return;
   }
   const noteField = document.getElementById("orderNote") as HTMLTextAreaElement | null;
+  const addressField = document.getElementById("orderAddress") as HTMLInputElement | null;
   const note = noteField?.value.trim() ?? "";
+  const address = addressField?.value.trim() ?? "";
   const typeLabel = orderType === "Recogida" ? i18n.pickupLabel : i18n.deliveryLabel;
+  
+  if (orderType === "Domicilio" && !address) {
+    alert("Por favor, añade tu dirección de entrega");
+    return;
+  }
+  
   let text = `${i18n.whatsappHeader}%0A%0A${i18n.whatsappType}: ${typeLabel}%0A%0A`;
   let total = 0;
   cart.forEach((i) => {
@@ -114,8 +124,43 @@ function sendOrder() {
   });
   text += `%0A${i18n.whatsappTotal}: ${total.toFixed(2)}€`;
   if (note) text += `%0A%0A${i18n.whatsappNote}: ${note}`;
-  if (orderType === "Domicilio") text += `%0A%0A${i18n.whatsappAddress}`;
+  if (orderType === "Domicilio") text += `%0A%0A${i18n.whatsappAddress}: ${address}`;
   window.open(`https://wa.me/${siteConfig.business.whatsapp}?text=${text}`, "_blank");
+}
+
+function sendOrderSms() {
+  const i18n = getI18n();
+  if (cart.length === 0) {
+    alert(i18n.emptyAlert);
+    return;
+  }
+  const noteField = document.getElementById("orderNote") as HTMLTextAreaElement | null;
+  const addressField = document.getElementById("orderAddress") as HTMLInputElement | null;
+  const note = noteField?.value.trim() ?? "";
+  const address = addressField?.value.trim() ?? "";
+  const typeLabel = orderType === "Recogida" ? i18n.pickupLabel : i18n.deliveryLabel;
+  
+  if (orderType === "Domicilio" && !address) {
+    alert("Por favor, añade tu dirección de entrega");
+    return;
+  }
+  
+  let text = `NUEVO PEDIDO - EL GORDO\n\n${i18n.whatsappType}: ${typeLabel}\n\n`;
+  let total = 0;
+  cart.forEach((i) => {
+    text += `- ${i.name} (x${i.qty}) - ${(i.price * i.qty).toFixed(2)}€\n`;
+    total += i.price * i.qty;
+  });
+  text += `\n${i18n.whatsappTotal}: ${total.toFixed(2)}€`;
+  if (note) text += `\n\n${i18n.whatsappNote}: ${note}`;
+  if (orderType === "Domicilio") text += `\n\n${i18n.whatsappAddress}: ${address}`;
+  
+  const phone = siteConfig.business.phone.replace(/\D/g, "");
+  const encodedText = encodeURIComponent(text);
+  
+  let smsLink = `sms:${phone}?body=${encodedText}`;
+  
+  window.location.href = smsLink;
 }
 
 export function initCart() {
@@ -126,7 +171,6 @@ export function initCart() {
       const name = addBtn.dataset.name!;
       const price = parseFloat(addBtn.dataset.price!);
       addItem(name, price);
-      openSheet();
       return;
     }
     const removeBtn = target.closest(".si-remove") as HTMLElement | null;
@@ -146,8 +190,13 @@ export function initCart() {
       document.querySelectorAll(".ot-btn").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       orderType = (btn as HTMLElement).dataset.type!;
+      const addressField = document.getElementById("orderAddress");
+      if (addressField) {
+        addressField.style.display = orderType === "Domicilio" ? "block" : "none";
+      }
     });
   });
   document.getElementById("sendOrder")?.addEventListener("click", sendOrder);
+  document.getElementById("sendOrderSms")?.addEventListener("click", sendOrderSms);
   renderCart();
 }
