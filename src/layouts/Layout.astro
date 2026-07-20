@@ -315,8 +315,8 @@ const pageTitle = title
   }
 
   @media (max-width: 760px) {
-    .nav-links { position: fixed; top: 60px; left: 0; right: 0; background: var(--cream); flex-direction: column; align-items: flex-start; padding: 20px 24px; border-bottom: 2px solid var(--ink); display: none; gap: 16px; z-index: 250; }
-    .nav-links.open { display: flex; }
+    .nav-links { position: absolute; top: 100%; left: 0; right: 0; background: var(--cream); flex-direction: column; align-items: flex-start; padding: 20px 24px; border-bottom: 2px solid var(--ink); display: flex; gap: 16px; z-index: 250; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-8px); transition: opacity .22s ease, transform .22s ease, visibility .22s linear; box-shadow: var(--shadow-sm); }
+    .nav-links.open { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
     .nav-toggle { display: block; }
     .order-btn span.label { display: none; }
     .menu-list { grid-template-columns: 1fr; }
